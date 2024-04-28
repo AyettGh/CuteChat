@@ -22,11 +22,13 @@ public class Client {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
 
-            String nickname = JOptionPane.showInputDialog(interfaceClient, "Enter your nickname:", "Nickname", JOptionPane.INFORMATION_MESSAGE);
+            String pseudo = JOptionPane.showInputDialog(interfaceClient, "saisir votre pseudo:", "Pseudo", JOptionPane.INFORMATION_MESSAGE);
 
-            writer.println(nickname);
+            writer.println(pseudo);
 
             new Thread(this::receiveMessages).start();
+        //receiveMessages() lié  mise à jour de l'interface utilisateur en réponse aux messages reçu du serveur.
+            //permet à l'interface client de rester RTOS aux  données provenant du serveur.
         } catch (Exception e) {
             System.out.println("Socket Connection error: " + e);
         }
@@ -40,9 +42,9 @@ public class Client {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                if (message.startsWith("/history")) {
+                if (message.startsWith("..//./../")) {
                     // Extract chat history from the message
-                    String[] history = message.substring(8).split(":");
+                    String[] history = new String[]{message};
                     interfaceClient.showChatHistory(history);
                 } else {
                     interfaceClient.appendMessage(message);
@@ -53,12 +55,5 @@ public class Client {
         }
     }
 
-    public void requestChatHistory() {
-        try {
-            // Send a special command to the server to request chat history
-            writer.println("/history");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }

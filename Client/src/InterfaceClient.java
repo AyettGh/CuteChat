@@ -12,14 +12,13 @@ public class InterfaceClient extends JFrame implements ActionListener {
 
     public InterfaceClient() {
         super("Cute Chat");
-        setupUI();
-
-        // Initialize the client for network communication
+        UIInterfaceClient();
         client = new Client(this);
         client.connectToServer();
     }
 
-    private void setupUI() {
+    private void UIInterfaceClient() {
+        //setTitle("Cute Chat");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -48,16 +47,15 @@ public class InterfaceClient extends JFrame implements ActionListener {
         buttonPanel.setBackground(new Color(200, 134, 234)); // Light purple background
         buttonPanel.add(historyButton);
 
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(chatScrollPane, BorderLayout.CENTER);
-        getContentPane().add(messageField, BorderLayout.SOUTH);
-        getContentPane().add(buttonPanel, BorderLayout.NORTH);
+        setLayout(new BorderLayout());
+        add(chatScrollPane, BorderLayout.CENTER);
+        add(messageField, BorderLayout.SOUTH);
+        add(buttonPanel, BorderLayout.NORTH);
 
-        getContentPane().setBackground(new Color(200, 134, 234));
     }
 
     public void appendMessage(String message) {
-        chatArea.append(message + "\n");
+        chatArea.append(message + "\n");//ajouter du texte à la fin de la zone de texte
         chatArea.setCaretPosition(chatArea.getDocument().getLength());
     }
 
@@ -75,15 +73,15 @@ public class InterfaceClient extends JFrame implements ActionListener {
     }
 
     public void showChatHistory(String[] history) {
-        JFrame historyFrame = new JFrame("Chat History");
+        JFrame historyFrame = new JFrame("Chat History");//crée une nouvelle fenêtre avec le titre "Chat History"
         JTextArea historyArea = new JTextArea(chatArea.getText());
+        historyFrame.setResizable(true);
         historyArea.setEditable(false);
         JScrollPane historyScrollPane = new JScrollPane(historyArea);
-
-        historyFrame.getContentPane().setLayout(new BorderLayout());
-        historyFrame.getContentPane().add(historyScrollPane, BorderLayout.CENTER);
-        historyFrame.setSize(400, 300);
-        historyFrame.setLocationRelativeTo(this);
+        historyFrame.setLayout(new BorderLayout());
+        historyFrame.add(historyScrollPane, BorderLayout.CENTER);
+        historyFrame.setSize(300, 250);
+        historyFrame.setLocationRelativeTo(this);//centre la fenêtre de l'historique % la fenêtre parente
         historyFrame.setVisible(true);
     }
 

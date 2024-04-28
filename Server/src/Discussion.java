@@ -28,12 +28,13 @@ public class Discussion extends Thread {
         try {
             String message;
             while ((message = reader.readLine()) != null) {
-                server.broadcast(clientName + ": " + message);
+                server.broadcast("["+clientName+"]" + ": " + message);
             }
         } catch (IOException e) {
             // Handle socket exception
             System.out.println("Client disconnected: " + clientName);
         } finally {
+            //Nettoyage et fermeture des ressources
             server.removeDiscussion(this);
             try {
                 clientSocket.close();
